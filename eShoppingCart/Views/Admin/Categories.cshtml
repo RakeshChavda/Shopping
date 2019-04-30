@@ -1,0 +1,63 @@
+﻿@model List<eShoppingCart.DAL.CategoryM>
+@{
+    ViewBag.Title = "Categories";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#tblCetagory').DataTable();
+    });
+</script>
+
+<div class="container">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="#">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item active">Cetagory</li>
+    </ol>
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">
+            Cetagory Details
+            <a href="../Admin/AddCategory" class="btn btn-info pull-right" style="float:right">Add New</a>
+             
+        </h6>
+    </div>
+
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="tblCetagory" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Sr No</th>
+                        <th>Cetagory Name</th>
+                        <th>Action </th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th>Sr No</th>
+                        <th>Cetagory Name</th>
+                        <th>Action</th>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@(Model.IndexOf(item) + 1)</td>
+                            <td>@item.CategoryName</td>
+                            <td>
+                                @Html.ActionLink("Edit", "CetegoryEdit", new { categoryId = item.CategoryId })
+                            </td>
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>

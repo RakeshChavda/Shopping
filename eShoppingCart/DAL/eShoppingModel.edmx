@@ -1,0 +1,508 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="eShoppingDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CartM">
+          <Key>
+            <PropertyRef Name="CartId" />
+          </Key>
+          <Property Name="CartId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductId" Type="int" />
+          <Property Name="MemberId" Type="int" />
+          <Property Name="CartStatusId" Type="int" />
+        </EntityType>
+        <EntityType Name="CartStatusM">
+          <Key>
+            <PropertyRef Name="CartStatusId" />
+          </Key>
+          <Property Name="CartStatusId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CartStatus" Type="varchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="CategoryM">
+          <Key>
+            <PropertyRef Name="CategoryId" />
+          </Key>
+          <Property Name="CategoryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CategoryName" Type="varchar" MaxLength="500" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="IsDelete" Type="bit" />
+        </EntityType>
+        <EntityType Name="MemberRoleM">
+          <Key>
+            <PropertyRef Name="MemberRoleId" />
+          </Key>
+          <Property Name="MemberRoleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MemberId" Type="int" />
+          <Property Name="RoleId" Type="int" />
+        </EntityType>
+        <EntityType Name="MembersM">
+          <Key>
+            <PropertyRef Name="MemberId" />
+          </Key>
+          <Property Name="MemberId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="250" />
+          <Property Name="LastName" Type="varchar" MaxLength="250" />
+          <Property Name="EmailId" Type="varchar" MaxLength="250" />
+          <Property Name="Password" Type="varchar" MaxLength="250" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="IsDelete" Type="bit" />
+          <Property Name="CreatedOn" Type="datetime" />
+          <Property Name="ModifiedOn" Type="datetime" />
+        </EntityType>
+        <EntityType Name="ProductM">
+          <Key>
+            <PropertyRef Name="ProductId" />
+          </Key>
+          <Property Name="ProductId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductName" Type="varchar" MaxLength="500" />
+          <Property Name="CategoryId" Type="int" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="IsDelete" Type="bit" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ModifiedDate" Type="datetime" />
+          <Property Name="Description" Type="varchar(max)" />
+          <Property Name="ProductImage" Type="varchar(max)" />
+          <Property Name="IsFeatured" Type="bit" />
+          <Property Name="Quantity" Type="int" />
+          <Property Name="Price" Type="decimal" Precision="18" Scale="0" />
+        </EntityType>
+        <EntityType Name="RolesM">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RoleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RoleName" Type="varchar" MaxLength="250" />
+          <Property Name="IsActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="ShippigDetailsM">
+          <Key>
+            <PropertyRef Name="ShppingDetailId" />
+          </Key>
+          <Property Name="ShppingDetailId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MemberId" Type="int" />
+          <Property Name="Adress" Type="varchar" MaxLength="500" />
+          <Property Name="City" Type="varchar" MaxLength="500" />
+          <Property Name="State" Type="varchar" MaxLength="500" />
+          <Property Name="Country" Type="varchar" MaxLength="500" />
+          <Property Name="ZipCode" Type="varchar" MaxLength="50" />
+          <Property Name="OrderID" Type="int" />
+          <Property Name="AmountPaid" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="PaymentType" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="SlideImageM">
+          <Key>
+            <PropertyRef Name="SlideId" />
+          </Key>
+          <Property Name="SlideId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SlideTitle" Type="varchar" MaxLength="500" />
+          <Property Name="SlideImage" Type="varchar(max)" />
+          <Property Name="IsActive" Type="bit" />
+        </EntityType>
+        <Association Name="FK__Cart__ProductId__29572725">
+          <End Role="ProductM" Type="Self.ProductM" Multiplicity="0..1" />
+          <End Role="CartM" Type="Self.CartM" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductM">
+              <PropertyRef Name="ProductId" />
+            </Principal>
+            <Dependent Role="CartM">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Product__Categor__1B0907CE">
+          <End Role="CategoryM" Type="Self.CategoryM" Multiplicity="0..1" />
+          <End Role="ProductM" Type="Self.ProductM" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CategoryM">
+              <PropertyRef Name="CategoryId" />
+            </Principal>
+            <Dependent Role="ProductM">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ShippigDe__Membe__239E4DCF">
+          <End Role="MembersM" Type="Self.MembersM" Multiplicity="0..1" />
+          <End Role="ShippigDetailsM" Type="Self.ShippigDetailsM" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MembersM">
+              <PropertyRef Name="MemberId" />
+            </Principal>
+            <Dependent Role="ShippigDetailsM">
+              <PropertyRef Name="MemberId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="e_SearchByName" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Search" Type="nvarchar(max)" Mode="In" />
+        </Function>
+        <EntityContainer Name="eShoppingDBModelStoreContainer">
+          <EntitySet Name="CartM" EntityType="Self.CartM" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CartStatusM" EntityType="Self.CartStatusM" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CategoryM" EntityType="Self.CategoryM" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MemberRoleM" EntityType="Self.MemberRoleM" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MembersM" EntityType="Self.MembersM" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductM" EntityType="Self.ProductM" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RolesM" EntityType="Self.RolesM" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ShippigDetailsM" EntityType="Self.ShippigDetailsM" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SlideImageM" EntityType="Self.SlideImageM" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Cart__ProductId__29572725" Association="Self.FK__Cart__ProductId__29572725">
+            <End Role="ProductM" EntitySet="ProductM" />
+            <End Role="CartM" EntitySet="CartM" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Product__Categor__1B0907CE" Association="Self.FK__Product__Categor__1B0907CE">
+            <End Role="CategoryM" EntitySet="CategoryM" />
+            <End Role="ProductM" EntitySet="ProductM" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ShippigDe__Membe__239E4DCF" Association="Self.FK__ShippigDe__Membe__239E4DCF">
+            <End Role="MembersM" EntitySet="MembersM" />
+            <End Role="ShippigDetailsM" EntitySet="ShippigDetailsM" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="eShoppingDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="eShoppingDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CartMs" EntityType="eShoppingDBModel.CartM" />
+          <EntitySet Name="CartStatusMs" EntityType="eShoppingDBModel.CartStatusM" />
+          <EntitySet Name="CategoryMs" EntityType="eShoppingDBModel.CategoryM" />
+          <EntitySet Name="MemberRoleMs" EntityType="eShoppingDBModel.MemberRoleM" />
+          <EntitySet Name="MembersMs" EntityType="eShoppingDBModel.MembersM" />
+          <EntitySet Name="ProductMs" EntityType="eShoppingDBModel.ProductM" />
+          <EntitySet Name="RolesMs" EntityType="eShoppingDBModel.RolesM" />
+          <EntitySet Name="ShippigDetailsMs" EntityType="eShoppingDBModel.ShippigDetailsM" />
+          <EntitySet Name="SlideImageMs" EntityType="eShoppingDBModel.SlideImageM" />
+          <AssociationSet Name="FK__Cart__ProductId__29572725" Association="eShoppingDBModel.FK__Cart__ProductId__29572725">
+            <End Role="ProductM" EntitySet="ProductMs" />
+            <End Role="CartM" EntitySet="CartMs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Product__Categor__1B0907CE" Association="eShoppingDBModel.FK__Product__Categor__1B0907CE">
+            <End Role="CategoryM" EntitySet="CategoryMs" />
+            <End Role="ProductM" EntitySet="ProductMs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ShippigDe__Membe__239E4DCF" Association="eShoppingDBModel.FK__ShippigDe__Membe__239E4DCF">
+            <End Role="MembersM" EntitySet="MembersMs" />
+            <End Role="ShippigDetailsM" EntitySet="ShippigDetailsMs" />
+          </AssociationSet>
+          <FunctionImport Name="e_SearchByName" ReturnType="Collection(eShoppingDBModel.e_SearchByName_Result)">
+            <Parameter Name="Search" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+        <EntityType Name="CartM">
+          <Key>
+            <PropertyRef Name="CartId" />
+          </Key>
+          <Property Name="CartId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductId" Type="Int32" />
+          <Property Name="MemberId" Type="Int32" />
+          <Property Name="CartStatusId" Type="Int32" />
+          <NavigationProperty Name="ProductM" Relationship="eShoppingDBModel.FK__Cart__ProductId__29572725" FromRole="CartM" ToRole="ProductM" />
+        </EntityType>
+        <EntityType Name="CartStatusM">
+          <Key>
+            <PropertyRef Name="CartStatusId" />
+          </Key>
+          <Property Name="CartStatusId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CartStatus" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="CategoryM">
+          <Key>
+            <PropertyRef Name="CategoryId" />
+          </Key>
+          <Property Name="CategoryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CategoryName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="IsDelete" Type="Boolean" />
+          <NavigationProperty Name="ProductMs" Relationship="eShoppingDBModel.FK__Product__Categor__1B0907CE" FromRole="CategoryM" ToRole="ProductM" />
+        </EntityType>
+        <EntityType Name="MemberRoleM">
+          <Key>
+            <PropertyRef Name="MemberRoleId" />
+          </Key>
+          <Property Name="MemberRoleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MemberId" Type="Int32" />
+          <Property Name="RoleId" Type="Int32" />
+        </EntityType>
+        <EntityType Name="MembersM">
+          <Key>
+            <PropertyRef Name="MemberId" />
+          </Key>
+          <Property Name="MemberId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="EmailId" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="IsDelete" Type="Boolean" />
+          <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="ShippigDetailsMs" Relationship="eShoppingDBModel.FK__ShippigDe__Membe__239E4DCF" FromRole="MembersM" ToRole="ShippigDetailsM" />
+        </EntityType>
+        <EntityType Name="ProductM">
+          <Key>
+            <PropertyRef Name="ProductId" />
+          </Key>
+          <Property Name="ProductId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="CategoryId" Type="Int32" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="IsDelete" Type="Boolean" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ProductImage" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="IsFeatured" Type="Boolean" />
+          <Property Name="Quantity" Type="Int32" />
+          <NavigationProperty Name="CartMs" Relationship="eShoppingDBModel.FK__Cart__ProductId__29572725" FromRole="ProductM" ToRole="CartM" />
+          <NavigationProperty Name="CategoryM" Relationship="eShoppingDBModel.FK__Product__Categor__1B0907CE" FromRole="ProductM" ToRole="CategoryM" />
+          <Property Name="Price" Type="Decimal" Precision="18" Scale="0" />
+        </EntityType>
+        <EntityType Name="RolesM">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RoleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RoleName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="ShippigDetailsM">
+          <Key>
+            <PropertyRef Name="ShppingDetailId" />
+          </Key>
+          <Property Name="ShppingDetailId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MemberId" Type="Int32" />
+          <Property Name="Adress" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="City" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="State" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Country" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="ZipCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="OrderID" Type="Int32" />
+          <Property Name="AmountPaid" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="PaymentType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="MembersM" Relationship="eShoppingDBModel.FK__ShippigDe__Membe__239E4DCF" FromRole="ShippigDetailsM" ToRole="MembersM" />
+        </EntityType>
+        <EntityType Name="SlideImageM">
+          <Key>
+            <PropertyRef Name="SlideId" />
+          </Key>
+          <Property Name="SlideId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SlideTitle" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="SlideImage" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Boolean" />
+        </EntityType>
+        <Association Name="FK__Cart__ProductId__29572725">
+          <End Type="eShoppingDBModel.ProductM" Role="ProductM" Multiplicity="0..1" />
+          <End Type="eShoppingDBModel.CartM" Role="CartM" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductM">
+              <PropertyRef Name="ProductId" />
+            </Principal>
+            <Dependent Role="CartM">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Product__Categor__1B0907CE">
+          <End Type="eShoppingDBModel.CategoryM" Role="CategoryM" Multiplicity="0..1" />
+          <End Type="eShoppingDBModel.ProductM" Role="ProductM" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CategoryM">
+              <PropertyRef Name="CategoryId" />
+            </Principal>
+            <Dependent Role="ProductM">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ShippigDe__Membe__239E4DCF">
+          <End Type="eShoppingDBModel.MembersM" Role="MembersM" Multiplicity="0..1" />
+          <End Type="eShoppingDBModel.ShippigDetailsM" Role="ShippigDetailsM" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MembersM">
+              <PropertyRef Name="MemberId" />
+            </Principal>
+            <Dependent Role="ShippigDetailsM">
+              <PropertyRef Name="MemberId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="e_SearchByName_Result">
+          <Property Type="Int32" Name="ProductId" Nullable="false" />
+          <Property Type="String" Name="ProductName" Nullable="true" MaxLength="500" />
+          <Property Type="Int32" Name="CategoryId" Nullable="true" />
+          <Property Type="Boolean" Name="IsActive" Nullable="true" />
+          <Property Type="Boolean" Name="IsDelete" Nullable="true" />
+          <Property Type="DateTime" Name="CreatedDate" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="ModifiedDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="Description" Nullable="true" />
+          <Property Type="String" Name="ProductImage" Nullable="true" />
+          <Property Type="Boolean" Name="IsFeatured" Nullable="true" />
+          <Property Type="Int32" Name="Quantity" Nullable="true" />
+          <Property Type="Decimal" Name="Price" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="Int32" Name="CategoryId1" Nullable="true" />
+          <Property Type="String" Name="CategoryName" Nullable="true" MaxLength="500" />
+          <Property Type="Boolean" Name="IsActive1" Nullable="true" />
+          <Property Type="Boolean" Name="IsDelete1" Nullable="true" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="eShoppingDBModelStoreContainer" CdmEntityContainer="eShoppingDBEntities">
+          <EntitySetMapping Name="CartMs">
+            <EntityTypeMapping TypeName="eShoppingDBModel.CartM">
+              <MappingFragment StoreEntitySet="CartM">
+                <ScalarProperty Name="CartStatusId" ColumnName="CartStatusId" />
+                <ScalarProperty Name="MemberId" ColumnName="MemberId" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="CartId" ColumnName="CartId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CartStatusMs">
+            <EntityTypeMapping TypeName="eShoppingDBModel.CartStatusM">
+              <MappingFragment StoreEntitySet="CartStatusM">
+                <ScalarProperty Name="CartStatus" ColumnName="CartStatus" />
+                <ScalarProperty Name="CartStatusId" ColumnName="CartStatusId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CategoryMs">
+            <EntityTypeMapping TypeName="eShoppingDBModel.CategoryM">
+              <MappingFragment StoreEntitySet="CategoryM">
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MemberRoleMs">
+            <EntityTypeMapping TypeName="eShoppingDBModel.MemberRoleM">
+              <MappingFragment StoreEntitySet="MemberRoleM">
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="MemberId" ColumnName="MemberId" />
+                <ScalarProperty Name="MemberRoleId" ColumnName="MemberRoleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MembersMs">
+            <EntityTypeMapping TypeName="eShoppingDBModel.MembersM">
+              <MappingFragment StoreEntitySet="MembersM">
+                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="EmailId" ColumnName="EmailId" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="MemberId" ColumnName="MemberId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductMs">
+            <EntityTypeMapping TypeName="eShoppingDBModel.ProductM">
+              <MappingFragment StoreEntitySet="ProductM">
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="IsFeatured" ColumnName="IsFeatured" />
+                <ScalarProperty Name="ProductImage" ColumnName="ProductImage" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RolesMs">
+            <EntityTypeMapping TypeName="eShoppingDBModel.RolesM">
+              <MappingFragment StoreEntitySet="RolesM">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ShippigDetailsMs">
+            <EntityTypeMapping TypeName="eShoppingDBModel.ShippigDetailsM">
+              <MappingFragment StoreEntitySet="ShippigDetailsM">
+                <ScalarProperty Name="PaymentType" ColumnName="PaymentType" />
+                <ScalarProperty Name="AmountPaid" ColumnName="AmountPaid" />
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+                <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Adress" ColumnName="Adress" />
+                <ScalarProperty Name="MemberId" ColumnName="MemberId" />
+                <ScalarProperty Name="ShppingDetailId" ColumnName="ShppingDetailId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SlideImageMs">
+            <EntityTypeMapping TypeName="eShoppingDBModel.SlideImageM">
+              <MappingFragment StoreEntitySet="SlideImageM">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="SlideImage" ColumnName="SlideImage" />
+                <ScalarProperty Name="SlideTitle" ColumnName="SlideTitle" />
+                <ScalarProperty Name="SlideId" ColumnName="SlideId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="e_SearchByName" FunctionName="eShoppingDBModel.Store.e_SearchByName">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="eShoppingDBModel.e_SearchByName_Result">
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ProductImage" ColumnName="ProductImage" />
+                <ScalarProperty Name="IsFeatured" ColumnName="IsFeatured" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="CategoryId1" ColumnName="CategoryId1" />
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+                <ScalarProperty Name="IsActive1" ColumnName="IsActive1" />
+                <ScalarProperty Name="IsDelete1" ColumnName="IsDelete1" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

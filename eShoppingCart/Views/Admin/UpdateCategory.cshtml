@@ -1,0 +1,45 @@
+﻿@model eShoppingCart.Models.CategoryDetail
+@{
+    ViewBag.Title = "UpdateCategory";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="#">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item ">Cetagory</li>
+        <li class="breadcrumb-item active">Add New Cetagory</li>
+    </ol>
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">
+            Add New Cetagory
+        </h6>
+    </div>
+
+    <div class="card-body">
+        @using (Html.BeginForm("UpdateCategory", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.HiddenFor(m => m.CategoryId)
+
+
+            <div id="div_id_username" class="form-group required">
+                <label for="id_username" class="control-label col-md-4  requiredField"> Category Name<span class="asteriskField">*</span> </label>
+                <div class="controls col-md-8 ">
+                    @Html.TextBoxFor(m => m.CategoryName, new { @class = "from-control", placeholder = "Category Name", required = "required", autofocus = "autofocus" })
+                    @Html.ValidationMessageFor(m => m.CategoryName, "", new { @class = "text-danger" })
+
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="aab controls col-md-4 "></div>
+                <div class="controls col-md-8 ">
+                    <a onclick="window.history.back();" class="btn btn-warning">Cancel</a>
+                    <input type="submit" class="btn btn-primary" value="Save" />
+                </div>
+            </div>
+
+        }
+    </div>
